@@ -36,7 +36,7 @@ void display(list *head) {
         printf("%d -> ", head->val);
         head = head->next;
     }
-    printf("\n");
+    printf("NULL \n");
 }
 
 void revListItrative(list **head)
@@ -147,9 +147,9 @@ list* _reverseKnodes(list **cur, int k)
     return prv;
 }
 
-void reverseKnodes(list *head, int k)
+void reverseKnodes(list **head, int k)
 {
-    list *cur = head, *newhead, *prv = NULL;
+    list *cur = *head, *newhead, *prv = NULL;
     list *end, *start;
     printf("-------------- %s -------------\n", __FUNCTION__);
 
@@ -171,14 +171,14 @@ void reverseKnodes(list *head, int k)
             cur = cur->next;
         }
     }
-    
+    *head = newhead; 
     display(newhead);
 }
 
 int main() {
     
     list *head = NULL;
-    for(int i=20; i<=40; i++) {
+    for(int i=10; i<=25; i++) {
         listadd(&head,i);
  //       if(i%2==0)
    //         listadd(&head,i);
@@ -191,6 +191,6 @@ int main() {
     display(head);
     bubbleSort(head);
     display(head);
-//    removeDup(head);
-    reverseKnodes(head, 3);
+    reverseKnodes(&head, 3);
+    reverseKnodes(&head, 3);
 } 
