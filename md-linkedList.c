@@ -174,6 +174,45 @@ void reverseKnodes(list **head, int k)
     *head = newhead; 
     display(newhead);
 }
+int fib(int n) 
+{
+    if (n<=1) return n;
+    return fib(n-1) + fib(n-2);
+}
+
+void _fib() {
+    printf("-------------- %s -------------\n", __FUNCTION__);
+    int n =31;
+    printf("fib %d = %d\n", n , fib(n));
+
+    int a=0, b=1, c; 
+    for(int i=2; i<=n; i++){
+        c = a + b;
+        a=b; b = c;
+    }
+
+    printf("fib %d = %d\n", n , c);
+}
+
+void runnerLengthEncoding()
+{
+
+    printf("-------------- %s -------------\n", __FUNCTION__);
+    char str[100] = "AAABBBCCCDDDDEEEEFF";
+    char encode[200]={0};
+    char encode1[200]={0};
+    int count;
+    for (int i=0; i<strlen(str); i++) {
+        count = 1;
+        while(i+1 < strlen (str) && str[i] == str[i+1]) {
+            count++; 
+            i++;
+        }
+        sprintf(encode, "%c%d", str[i], count);
+        strcat(encode1, encode);
+    }
+    printf("%s\n", encode1);
+}
 
 int main() {
     
@@ -193,4 +232,6 @@ int main() {
     display(head);
     reverseKnodes(&head, 3);
     reverseKnodes(&head, 3);
+    _fib();
+    runnerLengthEncoding();
 } 
