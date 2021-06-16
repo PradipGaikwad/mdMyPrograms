@@ -131,13 +131,57 @@ void findMid(list *head)
     (s!=NULL)? printf("odd\n"):printf("even \n");
 }
 
+list* _reverseKnodes(list **cur, int k) 
+{
+    list  *prv = NULL, *next;
+    
+    while(*cur && k>0) {
+        next = (*cur)->next;
+        (*cur)->next = prv;
+
+        prv=*cur;
+        *cur = next;
+
+        k--;
+    }
+    return prv;
+}
+
+void reverseKnodes(list *head, int k)
+{
+    list *cur = head, *newhead, *prv = NULL;
+    list *end, *start;
+    printf("-------------- %s -------------\n", __FUNCTION__);
+
+    while (cur) {
+        // 1st node gonaa be last
+        end = cur;
+        //get the last node and next node to the last node
+        start = _reverseKnodes(&cur, k);
+
+        if (!prv) newhead = start;
+        else prv->next = start;
+        int n ;
+        n = k;
+        end->next = cur;
+
+        while(cur && n) {
+            n--;
+            prv = cur;
+            cur = cur->next;
+        }
+    }
+    
+    display(newhead);
+}
+
 int main() {
     
     list *head = NULL;
-    for(int i=20; i<=30; i++) {
+    for(int i=20; i<=40; i++) {
         listadd(&head,i);
-        if(i%2==0)
-            listadd(&head,i);
+ //       if(i%2==0)
+   //         listadd(&head,i);
     }
     
     display(head);
@@ -147,14 +191,6 @@ int main() {
     display(head);
     bubbleSort(head);
     display(head);
-    removeDup(head);
-    listadd(&head, 100);
-    display(head);
-    findMid(head);
-    listadd(&head, 101);
-    display(head);
-    findMid(head);
-    listadd(&head, 102);
-    display(head);
-    findMid(head);
+//    removeDup(head);
+    reverseKnodes(head, 3);
 } 
