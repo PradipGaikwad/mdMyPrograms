@@ -35,7 +35,7 @@ int main()
     key[8]="tuv";
     key[9]="wxyz";
     
-    char input[10] = "031";
+    char input[10] = "3256";
     int j=0;
     for(int i=0; i<strlen (input); i++) {
         if(input[i]!='0' && input[i] != '1') {
