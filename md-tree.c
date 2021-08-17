@@ -2,6 +2,7 @@
 #include <iostream>
 #include <queue>
 #include <stdio.h>
+#include <bits/stdc++.h>
 using namespace std;
 
 /* A binary tree node has data, pointer to left child
@@ -125,6 +126,90 @@ void _print2D(Node * r, int space) {
 void print2D(Node * r, int space) {
     _print2D(r, space);
 }
+
+void leftv(Node *root, int *val, int level) {
+
+    if(!root) return;
+
+    if(*val <= level){
+        //printf("%d:%d:%d ", root->data, *val, level);
+        printf("%d->\n", root->data);
+        *val +=1;
+    }
+    leftv(root->right, val, level+1);
+    leftv(root->left, val, level+1);
+}
+
+map<int, int> mp;
+
+void topv(Node *root, int level) {
+    
+    if (!root) return;
+
+    topv(root->left, level - 1);
+    mp[level] = root->data;
+    printf("%d:%d->", root->data, level);
+    topv(root->right, level + 1);
+}
+
+void topv1(Node *root) {
+
+    if(!root) return;
+    topv (root, 0);
+
+}
+
+void moris(Node *root) {
+
+    stack<Node *> st;
+    Node *cur;
+    
+    while (root || !st.empty()) {
+        
+        while(root) {
+            st.push(root);
+            root = root->left;
+        }
+        
+        root = st.top();
+        st.pop();
+        printf("%d-> \n", root->data);
+        
+        root = root->right;
+
+    }
+}
+int findmin(Node *root) {
+    while(root->left) root = root->left;
+    return root->data;
+}
+void find_ancsuc (Node *root, int *anc, int *suc, int key) {
+
+    if(!root) return;
+
+    if(root->data == key) {
+        if (root->left) {
+            *anc = findmin (root->left);
+        }
+
+        if(root->right) {
+            *suc = findmin(root->right);
+        }
+        return;
+    }
+    
+    if(key < root->data) {
+        *suc = root->data;
+        find_ancsuc(root->left, anc, suc, key);
+    }
+    if(key > root->data) {
+        *anc = root->data;
+        find_ancsuc(root->right, anc, suc, key);
+    }
+
+}
+
+
 // Driver code
 int main()
 {
@@ -149,6 +234,22 @@ int main()
     cout << "Inorder traversal after insertion: ";
     inorder(root);
     cout << endl;
+    int val = 0, level = 0;
+
+    printf("left view \n");
+    leftv(root, &val, level);
+
+    printf("top view \n");
+    topv1(root);
+
+    printf("\nFake Moris \n");
+    moris(root);
+    
+    int n = 16;
+    printf("\n find ancister and successor %d\n", n );
+    int anc = 0, suc = 0;
+    find_ancsuc(root, &anc, &suc, n);
+    printf("%d: %d : %d \n", anc, n, suc);
     return 0;
 }
 
