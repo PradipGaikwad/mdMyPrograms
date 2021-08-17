@@ -133,7 +133,7 @@ void leftv(Node *root, int *val, int level) {
 
     if(*val <= level){
         //printf("%d:%d:%d ", root->data, *val, level);
-        printf("%d->\n", root->data);
+        printf("%d->", root->data);
         *val +=1;
     }
     leftv(root->right, val, level+1);
@@ -173,7 +173,7 @@ void moris(Node *root) {
         
         root = st.top();
         st.pop();
-        printf("%d-> \n", root->data);
+        printf("%d-> ", root->data);
         
         root = root->right;
 
@@ -225,7 +225,50 @@ void find_ancsuc (Node *root, int *anc, int *suc, int key) {
 
 }
 
+int path_sum(Node* root, int sum, int *v1, int idx) {
+    if(!root) return 0;
 
+    if(!root->left && !root->right) return root->data;
+    //if(!root->left || !root->right) return 0;
+
+    int lsum = path_sum(root->left, sum, v1, idx+1);
+    int rsum = path_sum(root->right, sum, v1, idx+1);
+    printf("%d:%d:%d -> ", root->data, lsum, rsum);
+    return (lsum > rsum)?root->data + lsum: root->data + rsum;
+}
+void display(vector<int>& v1) {
+
+    for(int i=0; i<v1.size(); i++) {
+        printf("%d -> ", v1[i]);
+    }
+    printf("\n");
+}
+void serialize(Node *root, vector<int>& v1) {
+    
+    if(!root) {
+        v1.push_back(-100);
+        return;
+    }
+    
+    v1.push_back(root->data);
+    serialize(root->left, v1);
+    serialize(root->right, v1);
+
+}
+
+Node* de_serialize(vector<int>& v1, int *i) {
+    if (v1[*i] == -100) {
+        return NULL;
+    }
+    
+    Node *tmp = CreateNode(v1[*i]);
+    *i = *i + 1;
+    tmp->left = de_serialize(v1, i);
+    *i = *i + 1;
+    tmp->right = de_serialize(v1, i);
+
+    return tmp;
+}
 // Driver code
 int main()
 {
@@ -252,7 +295,7 @@ int main()
     cout << endl;
     int val = 0, level = 0;
 
-    printf("left view \n");
+    printf("right view \n");
     leftv(root, &val, level);
 
     printf("top view \n");
@@ -270,6 +313,19 @@ int main()
     printf("root to leaf sum %d \n", n);
     int v1[10];
     root_to_leaf_sum(root, n, v1, 0);
+    printf("\npath sum \n");
+    path_sum(root, n, v1, 0);
+
+    printf("\n\nSerialize \n");
+    vector<int> v2;
+    serialize(root, v2);
+    display(v2);
+
+    printf("\nDeserialize \n");
+    int i = 0;
+    Node *tmp = de_serialize(v2, &i);
+    print2D(tmp, 5);
+    //print2D(root, 5); validation
     return 0;
 }
 
