@@ -269,6 +269,47 @@ Node* de_serialize(vector<int>& v1, int *i) {
 
     return tmp;
 }
+
+void zigzag(Node *root) {
+
+    if(!root) return;
+
+    stack<Node*> s1;
+    stack<Node*> s2;
+    stack<Node*> *ptr; 
+    stack<Node*> *st_tmp; 
+    
+    unsigned int dir = 0; 
+    
+    s1.push(root);
+    ptr = &s1;
+    st_tmp = &s2;
+    while (!ptr->empty()) {
+
+        Node *tmp;
+        int sz = ptr->size();
+        
+        while(sz) {
+            tmp = ptr->top();
+            ptr->pop();
+            printf("%d->", tmp->data);
+            
+            if(dir) {
+                if(tmp->left) st_tmp->push(tmp->left);
+                if(tmp->right) st_tmp->push(tmp->right);
+            } else {
+                if(tmp->right) st_tmp->push(tmp->right);
+                if(tmp->left) st_tmp->push(tmp->left);
+            }
+            sz--;
+        }
+        stack<Node*> *swap = st_tmp;
+        st_tmp = ptr;
+        ptr = swap;
+        dir = dir ^ 1;
+        printf("\n");
+    }
+}
 // Driver code
 int main()
 {
@@ -326,6 +367,8 @@ int main()
     Node *tmp = de_serialize(v2, &i);
     print2D(tmp, 5);
     //print2D(root, 5); validation
+    printf("\n\n ZigZag \n");
+    zigzag(tmp);
     return 0;
 }
 
