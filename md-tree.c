@@ -183,6 +183,22 @@ int findmin(Node *root) {
     while(root->left) root = root->left;
     return root->data;
 }
+
+void root_to_leaf_sum(Node* root, int sum, int *v1, int idx) {
+    if(!root) return;
+
+    v1[idx] = root->data;
+    sum -= root->data;
+    if(sum==0 && !root->left && !root->right) {
+        for (int i=0; i<= idx; i++ ) printf("%d -> ", v1[i]);
+        printf("\n");
+        return;
+    }
+
+    root_to_leaf_sum(root->left, sum, v1, idx+1);
+    root_to_leaf_sum(root->right, sum, v1, idx+1);
+
+}
 void find_ancsuc (Node *root, int *anc, int *suc, int key) {
 
     if(!root) return;
@@ -250,6 +266,10 @@ int main()
     int anc = 0, suc = 0;
     find_ancsuc(root, &anc, &suc, n);
     printf("%d: %d : %d \n", anc, n, suc);
+    n=41;
+    printf("root to leaf sum %d \n", n);
+    int v1[10];
+    root_to_leaf_sum(root, n, v1, 0);
     return 0;
 }
 
