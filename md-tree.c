@@ -234,7 +234,8 @@ int path_sum(Node* root, int sum, int *v1, int idx) {
     int lsum = path_sum(root->left, sum, v1, idx+1);
     int rsum = path_sum(root->right, sum, v1, idx+1);
     printf("%d:%d:%d -> ", root->data, lsum, rsum);
-    return (lsum > rsum)?root->data + lsum: root->data + rsum;
+    //return (lsum > rsum)?root->data + lsum: root->data + rsum;
+    return root->data + lsum + rsum;
 }
 void display(vector<int>& v1) {
 
@@ -310,6 +311,30 @@ void zigzag(Node *root) {
         printf("\n");
     }
 }
+void mirror(Node *root) 
+{
+    if(!root) return;
+
+    mirror(root->left);
+    mirror(root->right);
+
+    Node *tmp = root->left;
+    root->left = root->right;
+    root->right = tmp;
+    return;
+}
+int commonancestor(Node *root, int key1, int key2) 
+{
+    if(!root) return 0;
+
+    if(root->data >= key1 && root->data <= key2) return root->data;
+    
+    if(root->data > key1 && root->data > key2) 
+        return commonancestor(root->left, key1, key2);
+    else 
+        return commonancestor(root->right, key1, key2);
+
+}
 // Driver code
 int main()
 {
@@ -354,8 +379,7 @@ int main()
     printf("root to leaf sum %d \n", n);
     int v1[10];
     root_to_leaf_sum(root, n, v1, 0);
-    printf("\npath sum \n");
-    path_sum(root, n, v1, 0);
+    printf("\npath sum %d \n", path_sum(root, n, v1, 0));
 
     printf("\n\nSerialize \n");
     vector<int> v2;
@@ -369,6 +393,12 @@ int main()
     //print2D(root, 5); validation
     printf("\n\n ZigZag \n");
     zigzag(tmp);
+
+    printf("\n\n commonancestor of %d, %d = %d \n", 7, 11, commonancestor(root, 9, 11));
+    //printf("\n\n Mirror \n");
+    //print2D(root, 5);
+    //mirror(root);
+    print2D(root, 5);
     return 0;
 }
 
