@@ -29,17 +29,41 @@ void display(int *arr, int len) {
     }
     printf("\n");
 }
-
-int main() 
+void bubble(int *a, int len)
 {
+    int swapped = 1;
+    int count = 0;
 
-    int arr[] = {1,2,3,4,5,6,7,8,9};
-    int len = sizeof(arr) / sizeof(arr[0]);
+    while(swapped == 1) {
+        for (int j=0; j<len-count-1; j++) {
+            swapped = 0;
+            if(a[j] < a[j+1]) {
+                int tmp = a[j];
+                a[j] = a[j+1];
+                a[j+1] = tmp;
+                swapped = 1;
+                count++;
+            }
+        }
+    }
+}
+void heap_main(int *arr, int len) {
 
-    display(arr, len);
-    
     for(int i=len/2-1; i>=0; i--) {
         hepify(arr, i, len);
         display(arr, len);
     }
+
+}
+int main() 
+{
+
+    int arr[] = {1,2,3,4,9,6,7,8,5};
+    int len = sizeof(arr) / sizeof(arr[0]);
+
+    display(arr, len);
+    heap_main(arr, len); 
+    display(arr, len);
+    bubble(arr, len);
+    display(arr, len);
 }
