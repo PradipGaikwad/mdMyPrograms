@@ -213,7 +213,29 @@ void runnerLengthEncoding()
     }
     printf("%s\n", encode1);
 }
+void even_odd(list *head) {
+    list oddh, evenh;
+    list *odd, *even;
+    
+    odd = &oddh;
+    even = &evenh;
 
+    while(head) {
+        if(head->val % 2) {
+             odd->next = head;
+             odd = odd->next;
+        } else {
+            even->next = head;
+            even = even->next;
+        }
+        head = head->next;
+    }
+    odd->next = NULL;
+    even->next = NULL;
+    display(evenh.next);
+    display(oddh.next);
+
+}
 int main() {
     
     list *head = NULL;
@@ -234,4 +256,6 @@ int main() {
     reverseKnodes(&head, 3);
     _fib();
     runnerLengthEncoding();
+    even_odd(head);
+    display(head);
 } 

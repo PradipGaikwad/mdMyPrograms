@@ -335,6 +335,31 @@ int commonancestor(Node *root, int key1, int key2)
         return commonancestor(root->right, key1, key2);
 
 }
+void display(Node *head) {
+    while(head) {
+        printf("%2.d -> ", head->data);
+        head = head->right;
+    }
+    printf("\n\n");
+}
+Node *prv = NULL, *head = NULL;
+void doubly_list(Node *root) {
+
+    if(!root) return ;
+
+    doubly_list(root->left);
+    if(!prv) {
+        head = root;
+        head->left = NULL;
+    } else {
+        prv->right = root;
+        prv->right->left = prv;
+    }
+    prv = root;
+    doubly_list(root->right);
+
+}
+    
 // Driver code
 int main()
 {
@@ -399,6 +424,8 @@ int main()
     //print2D(root, 5);
     //mirror(root);
     print2D(root, 5);
+    doubly_list(root);
+    display(head);
     return 0;
 }
 
