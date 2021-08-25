@@ -45,15 +45,16 @@ void insert(struct hashtbl *obj, int val)
     newitem->next = obj->item_ptr[buck];
     obj->item_ptr[buck] = newitem;
 }
+
 int main() {
 
     struct hashtbl obj;
 
-    obj.buckets = 40;
+    obj.buckets = 3;
     obj.item_ptr = (struct item **) malloc (sizeof(struct item *) * obj.buckets);
     for(int i=0; i< obj.buckets; i++) obj.item_ptr[i] = NULL;
 
-    for(int i=0; i<80; i++) {
+    for(int i=0; i<20; i++) {
         insert(&obj, i);
     }
         print(&obj);
