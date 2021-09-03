@@ -28,10 +28,23 @@ int lcs1(char *x, char *y, int xi, int yi, int count)
     int count3 = lcs1(x, y, xi, yi+1, 0);
     return max(count1, max(count3, count2));
 }
+int lcsmax = 0;
+int lcs2(char *x, char *y, int xi, int yi, int count)
+{
+    if(x[xi] == '\0' || y[yi] == '\0') return 0; 
+    
+    if(x[xi] != y[yi]) return 0; 
+    if (x[xi] == y[yi]) {
+        lcsmax = max (lcsmax, lcs2 (x, y, xi+1, yi+1, 0) + 1);
+    }
+
+    return max (lcs2(x, y, xi+1, yi, 0), lcs2(x, y, xi, yi+1, 0));
+}
+
 int main()
 {
-    char x[] = "pqrabc";
-    char y[] = "xyzabc";
-    printf("lcs = %d\n", lcs1(x,y,0,0,0));
+    char x[] = "pqrabcxyza";
+    char y[] = "pqxyzabc";
+    printf("lcs = %d\n", lcs2(x,y,0,0,0));
     return 0;
 }
