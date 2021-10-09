@@ -66,7 +66,7 @@ void search (int *a, int len, int num) {
 int main()
 {
 
-    int a[] = {100,1,2,2,2,3,9,10,11,7};
+    int a[] = {1,2,2,2,3,9,10,11,17,1000};
     int len = sizeof(a) / sizeof(a[0]);
     int num = 2;
     int s1 = 2;

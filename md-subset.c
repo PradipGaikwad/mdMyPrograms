@@ -7,7 +7,7 @@ void gensubset(int *arr, int idx, int *path, int pidx, int len) {
     for(int ii=idx; ii<len; ii++) {
         path[pidx] = arr[ii];
 
-        printf("%3.d :", c++);
+        printf("%5.d :", c++);
         for(int i=0; i<=pidx; i++) printf("%d->", path[i]); printf("\n");
 
         gensubset(arr, ii+1, path, pidx+1, len);
@@ -28,8 +28,8 @@ void gensubset1(int *arr, int idx, int *path, int pidx, int len) {
     c++;
     printf("\n");
     
-    gensubset(arr, idx+1, path, pidx+1, len);
-    gensubset(arr, idx+1, path, pidx, len);
+    gensubset1(arr, idx+1, path, pidx+1, len);
+    gensubset1(arr, idx+1, path, pidx, len);
 
 }
 void subarray(int *arr, int len) 
