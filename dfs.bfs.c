@@ -4,8 +4,18 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-
+int visited[100] = {0};
 void dfs (int g[][7], int start, int end) 
+{
+    visited[start]=1;
+    printf("%d -> ", start);
+
+    for(int i=0; i<end; i++) {
+        if (!g[start][i]|| visited[i]) continue;
+        dfs(g, i, end);
+    }
+}
+void bfs (int g[][7], int start, int end) 
 {
     queue <int> q;
     int visited[100] = {0};
@@ -30,14 +40,17 @@ void dfs (int g[][7], int start, int end)
 }
 
 int main() {
-    int G[7][7]={{0,0,0,0,0,0,0},
+    int G[7][7]={{0,0,0,0,0,0,1},
                 {0,0,1,1,0,0,0},
                 {0,1,0,0,1,0,0},
                 {0,1,0,0,1,0,0},
                 {0,0,1,1,0,1,1},
                 {0,0,0,0,1,0,0},
-                {0,0,0,0,1,0,0}};
+                {1,0,0,0,1,0,0}};
 
     dfs (G,4,7);
+    printf("\n");
+    bfs (G,4,7);
+
     return 0;
 }

@@ -50,11 +50,11 @@ int main()
     for (int i = 0; i<N; i++)
         moves[i] = -1;
     
-    // Ladders
-    //moves[2] = 21;
-    //moves[4] = 7;
+    Ladders
+    moves[2] = 21;
+    moves[4] = 7;
     moves[10] = 25;
-    //moves[19] = 28;
+    moves[19] = 28;
 
     // Snakes
     moves[26] = 0;

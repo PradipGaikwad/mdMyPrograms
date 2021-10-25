@@ -5,6 +5,7 @@ void gensubset(int *arr, int idx, int *path, int pidx, int len) {
     if(idx == len) return;
 
     for(int ii=idx; ii<len; ii++) {
+        if (ii > idx && arr[ii] == arr[ii-1]) continue;
         path[pidx] = arr[ii];
 
         printf("%5.d :", c++);
@@ -80,7 +81,7 @@ void subset_sum1(int *arr, int ai, int *path, int pi, int sum, int len, int targ
 }
 int main()
 {
-    int arr[]={1, 5, 7};
+    int arr[]={1, 3, 3};
     int path[100];
     int len = sizeof(arr)/sizeof(arr[0]);
     gensubset(arr, 0, path, 0, len);
